@@ -1,15 +1,39 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
+import 'package:kopimate/models/shop_model.dart';
+import 'package:provider/provider.dart';
 
 class ShopScreen extends StatefulWidget {
+  const ShopScreen({super.key});
+
   @override
-  _ShopScreenState createState() => _ShopScreenState();
+  ShopScreenState createState() => ShopScreenState();
 }
 
-class _ShopScreenState extends State<ShopScreen> {
+class ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      home: ChangeNotifierProvider<ShopModel>(
+        create: (_) => ShopModel()..fetchShops(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('本一覧'),
+          ),
+          body: Consumer<ShopModel>(
+            builder: (context, model, child) {
+              final shops = model.shops;
+              return ListView.builder(
+                itemCount: shops.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(shops[index].name),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
