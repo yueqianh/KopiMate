@@ -8,22 +8,21 @@ import '../components/square.dart';
 
 //import 'package:firebase_auth/firebase_auth.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function()? onTap;
-  const Login({super.key, required this.onTap});
+  const Register({super.key, required this.onTap});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   //text editing controllers
   final usernameController = TextEditingController();
-
   final passwordController = TextEditingController();
-
-  //sign-in method
-    void signIn() async {
+  final confirmPasswordController = TextEditingController();
+  //sign-up method
+    void signUp() async {
     // show loading circle
     showDialog(
       context: context,
@@ -34,42 +33,39 @@ class _LoginState extends State<Login> {
       },
     );
 
-    // try sign in
+    // try sign up
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      // check if password is confirmed
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: usernameController.text,
         password: passwordController.text,
       );
+      } else {
+        // error message
+        showErrorMessage("Passwords don't match!");
+      }
       // pop the loading circle
-      Navigator.pop(context as BuildContext);
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
-      Navigator.pop(context as BuildContext);
-      // WRONG EMAIL
-      if (e.code == 'user-not-found') {
-        // show error to user
-        wrongEmailMessage();
-      }
-
-      // WRONG PASSWORD
-      else if (e.code == 'wrong-password') {
-        // show error to user
-        wrongPasswordMessage();
-      }
+      Navigator.pop(context);
+      // show error message
+      showErrorMessage(e.code);
     }
   }
 
-  // wrong email message popup
-  void wrongEmailMessage() {
+  // error message
+  void showErrorMessage(String message) {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
+        return AlertDialog(
           backgroundColor: Colors.deepPurple,
           title: Center(
             child: Text(
-              'Incorrect Email',
-              style: TextStyle(color: Colors.white),
+              message,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         );
@@ -77,23 +73,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  // wrong password message popup
-  void wrongPasswordMessage() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              'Incorrect Password',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
-    );
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -104,31 +84,30 @@ class _LoginState extends State<Login> {
           child: Center(
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
 
                 //logo
                 const Text(
                   'KopiMate',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 40,
+                    fontSize: 20,
                     fontFamily: 'Pacific',
                   ),
                 ),
 
-                Image.asset('lib/images/coffee.png', height: 70),
+                Image.asset('lib/images/coffee.png', height: 35),
                 const SizedBox(height: 25),
 
                 //Short message
-                /*
                   const Text(
-                    'The perfect cup of joe!',
+                    'Become a coffee master!',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
-                  */
+                  
 
                 const SizedBox(height: 25),
 
@@ -150,26 +129,21 @@ class _LoginState extends State<Login> {
 
                 const SizedBox(height: 10),
 
-                //forgot password
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[800]),
-                      ),
-                    ],
-                  ),
+                //confirm password
+                UserTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  obscureText: true,
                 ),
+
+                
 
                 const SizedBox(height: 25),
 
                 //sign in button
                 Button(
-                  text: "Sign In",
-                  onTap: signIn,
+                  text: "Sign Up",
+                  onTap: signUp,
                 ),
 
                 const SizedBox(height: 50),
@@ -225,14 +199,14 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member?',
+                      'Already have an account?',
                       style: TextStyle(color: Colors.grey[800]),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Register now',
+                        'Login now',
                         style: TextStyle(
                           color: Color.fromARGB(255, 59, 28, 11),
                           fontWeight: FontWeight.bold,

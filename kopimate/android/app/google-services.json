@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1073609177555",
+    "project_id": "login-41d34",
+    "storage_bucket": "login-41d34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073609177555:android:8e4534d541603ea4f75726",
+        "android_client_info": {
+          "package_name": "com.example.kopimate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAQSPx-jzSJqi7o93DbrvU3zO9kvCLGcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
