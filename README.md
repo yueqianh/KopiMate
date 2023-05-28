@@ -2,7 +2,7 @@
 By: Kotaro Yong and Huang Yueqian\
 Level of Achievement: Apollo 11\
 \
-Download Android APK for testing here:
+Download Android APK for testing here: https://github.com/yueqianh/KopiMate/releases/tag/v0.0.1
 
 ## Project Scope:
 (One sentence) An informative app that lists nearby coffee shops/cafes/roasters and integrates social features for sharing.\
