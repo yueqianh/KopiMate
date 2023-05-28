@@ -6,7 +6,11 @@ class Shop {
   Shop(DocumentSnapshot doc) {
     //　ドキュメントの持っているフィールド'title'をこのBookのフィールドtitleに代入
     name = doc['name'];
+    address = doc['address'];
+    imgName = doc['imgName'];
   }
   // Bookで扱うフィールドを定義しておく。
   String name = '';
+  String address = '';
+  String imgName = '';
 }
