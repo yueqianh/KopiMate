@@ -1,8 +1,8 @@
-# KopiMate
-By: Kotaro Yong and Huang Yueqian
-Level of Achievement: Apollo 11
-
-Download Android APK for testing here: 
+# KopiMate, an NUS SoC Orbital 2023 Project
+By: Kotaro Yong and Huang Yueqian\
+Level of Achievement: Apollo 11\
+\
+Download Android APK for testing here: \
 
 ## Project Scope:
 (One sentence) An informative app that lists nearby coffee shops/cafes/roasters and integrates social features for sharing.
