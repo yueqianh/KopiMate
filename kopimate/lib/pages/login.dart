@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kopimate/services/auth_service.dart';
 import '../components/user_textfield.dart';
 
 import '../components/button.dart';
@@ -207,14 +208,18 @@ class _LoginState extends State<Login> {
                 //google or apple sign in button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     // google login
-                    Square(imagePath: 'lib/images/google.png'),
+                    Square(
+                      onTap: () => AuthService().signInWithGoogle(),
+                      imagePath: 'lib/images/google.png'),
 
                     SizedBox(width: 25),
 
                     // apple login
-                    Square(imagePath: 'lib/images/apple.png')
+                    Square(
+                      onTap: () {},
+                      imagePath: 'lib/images/apple.png')
                   ],
                 ),
 
