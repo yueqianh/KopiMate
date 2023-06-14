@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopimate/pages/auth.dart';
+import 'package:kopimate/screens/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 void main() async{

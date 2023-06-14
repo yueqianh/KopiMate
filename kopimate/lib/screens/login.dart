@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kopimate/services/auth_service.dart';
 import '../components/user_textfield.dart';
-
 import '../components/button.dart';
-
 import '../components/square.dart';
+import 'forgot_pw.dart';
 
-//import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Login extends StatefulWidget {
   final Function()? onTap;
@@ -43,6 +42,7 @@ class _LoginState extends State<Login> {
       );
       // pop the loading circle
       Navigator.pop(context as BuildContext);
+
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
       Navigator.pop(context as BuildContext);
@@ -66,11 +66,11 @@ class _LoginState extends State<Login> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.white,
           title: Center(
             child: Text(
               'Incorrect Email',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         );
@@ -84,11 +84,11 @@ class _LoginState extends State<Login> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.white,
           title: Center(
             child: Text(
               'Incorrect Password',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         );
@@ -157,9 +157,20 @@ class _LoginState extends State<Login> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[800]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, 
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ForgotPassword();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.grey[800]),
+                        ),
                       ),
                     ],
                   ),
@@ -214,12 +225,13 @@ class _LoginState extends State<Login> {
                       onTap: () => AuthService().signInWithGoogle(),
                       imagePath: 'lib/images/google.png'),
 
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
 
                     // apple login
-                    Square(
+                    /*Square(
                       onTap: () {},
                       imagePath: 'lib/images/apple.png')
+                    */
                   ],
                 ),
 
