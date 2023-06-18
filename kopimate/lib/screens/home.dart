@@ -15,7 +15,10 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
 
   late TabController _tabController;
+  
+  //current user
   final user = FirebaseAuth.instance.currentUser!;
+
   static List<CoffeeModel> img = [
     CoffeeModel("Latte"),
     CoffeeModel('Espresso'),
@@ -239,7 +242,7 @@ class _HomePageState extends State<HomePage>
                                     children: [
                                       Text(
                                         display_list[i].coffee_name!,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -261,7 +264,7 @@ class _HomePageState extends State<HomePage>
                                         color: Color(0xFfe57734),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         CupertinoIcons
                                             .bubble_left_bubble_right_fill,
                                         size: 20,
