@@ -6,7 +6,6 @@ import 'package:kopimate/screens/forums/cold_coffee_forum.dart';
 import 'package:kopimate/screens/forums/espresso_forum.dart';
 import 'package:kopimate/screens/forums/latte_forum.dart';
 import 'package:kopimate/screens/forums/vietnamese_iced_coffe_forum.dart';
-import 'package:kopimate/screens/single_forum.dart';
 import '../models/coffee_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -164,7 +163,8 @@ class _HomePageState extends State<HomePage>
               ),
 
               //filter bar
-              /* TabBar(
+              /* 
+              TabBar(
                   controller: _tabController,
                   labelColor: Color(0xFFE57734),
                   unselectedLabelColor: Colors.white.withOpacity(0.5),
@@ -187,7 +187,9 @@ class _HomePageState extends State<HomePage>
               
               TabBarView(
                 controller: _tabController,
-                children: children), */
+                children: children), 
+              
+              */
 
               const SizedBox(height: 10),
 
