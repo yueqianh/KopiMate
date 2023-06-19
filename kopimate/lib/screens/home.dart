@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kopimate/screens/forums/americano_forum.dart';
+import 'package:kopimate/screens/forums/cold_coffee_forum.dart';
+import 'package:kopimate/screens/forums/espresso_forum.dart';
+import 'package:kopimate/screens/forums/latte_forum.dart';
+import 'package:kopimate/screens/forums/vietnamese_iced_coffe_forum.dart';
 import 'package:kopimate/screens/single_forum.dart';
 import '../models/coffee_model.dart';
 
@@ -22,7 +27,7 @@ class _HomePageState extends State<HomePage>
   static List<CoffeeModel> img = [
     CoffeeModel("Latte"),
     CoffeeModel('Espresso'),
-    CoffeeModel('Black Coffee'),
+    CoffeeModel('Americano'),
     CoffeeModel('Cold Coffee'),
     CoffeeModel('Vietnamese Iced Coffee'),
   ];
@@ -215,14 +220,57 @@ class _HomePageState extends State<HomePage>
                             children: [
                               InkWell(
                                 onTap: () {
+                                  //americano forum
+                                  if (display_list[i].coffee_name == 'Americano') {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => SingleForumScreen(
+                                          builder: (context) => AmericanoForum(
                                             coffee_type: display_list[i]
                                           ),
                                       ),
                                     );
+                                  //latte forum
+                                  } else if (display_list[i].coffee_name == 'Latte') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LatteForum(
+                                            coffee_type: display_list[i]
+                                          ),
+                                      ),
+                                    );
+                                  //cold coffee forum
+                                  } else if (display_list[i].coffee_name == 'Cold Coffee') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ColdCoffeeForum(
+                                            coffee_type: display_list[i]
+                                          ),
+                                      ),
+                                    );
+                                  //espresso forum
+                                  } else if (display_list[i].coffee_name == 'Espresso') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EspressoForum(
+                                            coffee_type: display_list[i]
+                                          ),
+                                      ),
+                                    );
+                                  //vietnamese coffee forum
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => VietnameseIceCoffeeForum(
+                                            coffee_type: display_list[i]
+                                          ),
+                                      ),
+                                    );
+                                  }
                                 },
                                 child: Container(
                                   margin: EdgeInsets.all(10),
