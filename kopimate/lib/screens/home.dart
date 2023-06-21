@@ -6,6 +6,8 @@ import 'package:kopimate/screens/forums/cold_coffee_forum.dart';
 import 'package:kopimate/screens/forums/espresso_forum.dart';
 import 'package:kopimate/screens/forums/latte_forum.dart';
 import 'package:kopimate/screens/forums/vietnamese_iced_coffe_forum.dart';
+import 'package:kopimate/screens/shop_screen.dart';
+import '../components/drawer.dart';
 import '../models/coffee_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,9 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-
   late TabController _tabController;
-  
+
   //current user
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -36,7 +37,10 @@ class _HomePageState extends State<HomePage>
   //search bar function
   void updateList(String s) {
     setState(() {
-      display_list = img.where((element) => element.coffee_name!.toLowerCase().contains(s.toLowerCase())).toList();
+      display_list = img
+          .where((element) =>
+              element.coffee_name!.toLowerCase().contains(s.toLowerCase()))
+          .toList();
     });
   }
 
@@ -62,6 +66,19 @@ class _HomePageState extends State<HomePage>
   // sign user out method
   void signOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  //navigate to shops
+  void goToShops() {
+    //pop menu
+    Navigator.pop(context);
+    
+    //go to shops page
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => ShopScreen()),
+    );
   }
 
   /*
@@ -91,37 +108,23 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 30, 29, 28),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 30, 29, 28),
+        /*
+        actions: [
+          //sign out button
+          IconButton(
+            onPressed: signOut,
+            icon: Icon(Icons.logout),
+          )
+        ],
+        */
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 15),
           child: ListView(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //profile button
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.sort_rounded,
-                        color: Colors.white.withOpacity(0.5),
-                        size: 35,
-                      ),
-                    ),
-
-                    //sign out button
-                    IconButton(
-                      onPressed: signOut,
-                      icon: Icon(Icons.logout),
-                    )
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
@@ -223,53 +226,53 @@ class _HomePageState extends State<HomePage>
                               InkWell(
                                 onTap: () {
                                   //americano forum
-                                  if (display_list[i].coffee_name == 'Americano') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AmericanoForum(
-                                            coffee_type: display_list[i]
-                                          ),
-                                      ),
-                                    );
-                                  //latte forum
-                                  } else if (display_list[i].coffee_name == 'Latte') {
+                                  if (display_list[i].coffee_name ==
+                                      'Americano') {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LatteForum(
-                                            coffee_type: display_list[i]
-                                          ),
+                                        builder: (context) => AmericanoForum(
+                                            coffee_type: display_list[i]),
                                       ),
                                     );
-                                  //cold coffee forum
-                                  } else if (display_list[i].coffee_name == 'Cold Coffee') {
+                                    //latte forum
+                                  } else if (display_list[i].coffee_name ==
+                                      'Latte') {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ColdCoffeeForum(
-                                            coffee_type: display_list[i]
-                                          ),
+                                        builder: (context) => LatteForum(
+                                            coffee_type: display_list[i]),
                                       ),
                                     );
-                                  //espresso forum
-                                  } else if (display_list[i].coffee_name == 'Espresso') {
+                                    //cold coffee forum
+                                  } else if (display_list[i].coffee_name ==
+                                      'Cold Coffee') {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => EspressoForum(
-                                            coffee_type: display_list[i]
-                                          ),
+                                        builder: (context) => ColdCoffeeForum(
+                                            coffee_type: display_list[i]),
                                       ),
                                     );
-                                  //vietnamese coffee forum
+                                    //espresso forum
+                                  } else if (display_list[i].coffee_name ==
+                                      'Espresso') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EspressoForum(
+                                            coffee_type: display_list[i]),
+                                      ),
+                                    );
+                                    //vietnamese coffee forum
                                   } else {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => VietnameseIceCoffeeForum(
-                                            coffee_type: display_list[i]
-                                          ),
+                                        builder: (context) =>
+                                            VietnameseIceCoffeeForum(
+                                                coffee_type: display_list[i]),
                                       ),
                                     );
                                   }
@@ -336,6 +339,10 @@ class _HomePageState extends State<HomePage>
         ),
       ),
 //place bottom navigation bar here
+      drawer: MyDrawer(
+        onSignOut: signOut,
+        onShopTap: goToShops,
+      ),
     );
   }
 }
