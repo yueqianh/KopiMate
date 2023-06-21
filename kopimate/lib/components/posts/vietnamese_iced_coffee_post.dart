@@ -184,34 +184,37 @@ class _VietnameseIceCoffeePostState extends State<VietnameseIceCoffeePost> {
         ),
         margin: EdgeInsets.only(top:25, left: 25, right: 25),
         padding: EdgeInsets.all(25),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //forum post
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //(message + user email)
-              Column(
-                children: [
-                  //message
-                  Text(widget.msg),
-
-                  const SizedBox(height: 5),
-
-                  //user
-                  Text(
-                    widget.user,
-                    style: TextStyle(color:Colors.grey[500]),
-                    ), 
-                ],
-              ),
-            
-              //delete button
-              if (widget.user == user.email)
-              DeleteButton(onTap: deletePost),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //(message + user email)
+                Column(
+                  children: [
+                    //message
+                    Text(widget.msg),
+          
+                    const SizedBox(height: 5),
+          
+                    //user
+                    Text(
+                      widget.user,
+                      style: TextStyle(color:Colors.grey[500]),
+                      ), 
+                  ],
+                ),
+              
+                //delete button
+                if (widget.user == user.email)
+                DeleteButton(onTap: deletePost),
+              ],
+            ),
           ),
 
           const SizedBox(height: 20),

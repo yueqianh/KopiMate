@@ -177,6 +177,7 @@ class _LattePostState extends State<LattePost> {
 
   @override
   Widget build(BuildContext context) {
+    //edit the Container or children/child/column to solve renderflex error
     return Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -184,37 +185,41 @@ class _LattePostState extends State<LattePost> {
         ),
         margin: EdgeInsets.only(top:25, left: 25, right: 25),
         padding: EdgeInsets.all(25),
+        
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //forum post
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //(message + user email)
-              Column(
-                children: [
-                  //message
-                  Text(widget.msg),
-
-                  const SizedBox(height: 5),
-
-                  //user
-                  Text(
-                    widget.user,
-                    style: TextStyle(color:Colors.grey[500]),
-                    ), 
-                ],
-              ),
-            
-              //delete button
-              if (widget.user == user.email)
-              DeleteButton(onTap: deletePost),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              //mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //(message + user email)
+                Column(
+                  children: [
+                    //message
+                    Text(widget.msg),
+          
+                    const SizedBox(height: 5),
+          
+                    //user
+                    Text(
+                      widget.user,
+                      style: TextStyle(color:Colors.grey[500]),
+                      ), 
+                  ],
+                ),
+              
+                //delete button
+                if (widget.user == user.email)
+                DeleteButton(onTap: deletePost),
+              ],
+            ),
           ),
 
-          const SizedBox(height: 20),
+          //const SizedBox(height: 20),
 
           //buttons
           Row(

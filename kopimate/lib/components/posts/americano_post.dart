@@ -188,30 +188,32 @@ class _AmericanoPostState extends State<AmericanoPost> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //forum post
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //(message + user email)
-              Column(
-                children: [
-                  //message
-                  Text(widget.msg),
-
-                  const SizedBox(height: 5),
-
-                  //user
-                  Text(
-                    widget.user,
-                    style: TextStyle(color:Colors.grey[500]),
-                    ), 
-                ],
-              ),
-            
-              //delete button
-              if (widget.user == user.email)
-              DeleteButton(onTap: deletePost),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //(message + user email)
+                Column(
+                  children: [
+                    //message
+                    Text(widget.msg),
+          
+                    const SizedBox(height: 5),
+          
+                    //user
+                    Text(
+                      widget.user,
+                      style: TextStyle(color:Colors.grey[500]),
+                      ), 
+                  ],
+                ),
+              
+                //delete button
+                if (widget.user == user.email)
+                DeleteButton(onTap: deletePost),
+              ],
+            ),
           ),
 
           const SizedBox(height: 20),
