@@ -68,19 +68,6 @@ class _HomePageState extends State<HomePage>
     FirebaseAuth.instance.signOut();
   }
 
-  //navigate to shops
-  void goToShops() {
-    //pop menu
-    Navigator.pop(context);
-    
-    //go to shops page
-    Navigator.push(
-      context, 
-      MaterialPageRoute(
-        builder: (context) => ShopScreen()),
-    );
-  }
-
   /*
   @override
   Widget build(BuildContext context) {
@@ -107,10 +94,8 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 30, 29, 28),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 30, 29, 28),
-        /*
+        title: const Text('Forums'),
         actions: [
           //sign out button
           IconButton(
@@ -118,7 +103,6 @@ class _HomePageState extends State<HomePage>
             icon: Icon(Icons.logout),
           )
         ],
-        */
       ),
       body: SafeArea(
         child: Padding(
@@ -130,7 +114,7 @@ class _HomePageState extends State<HomePage>
                 child: Text(
                   "It's a Great Day for Coffee",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
                   ),
@@ -337,11 +321,6 @@ class _HomePageState extends State<HomePage>
             ],
           ),
         ),
-      ),
-//place bottom navigation bar here
-      drawer: MyDrawer(
-        onSignOut: signOut,
-        onShopTap: goToShops,
       ),
     );
   }

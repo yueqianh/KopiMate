@@ -44,37 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBxV7h7QDnZLNu-24up0JZ5pWHV_sZ13p8',
-    appId: '1:1073609177555:web:c2144f1789aeb0c8f75726',
-    messagingSenderId: '1073609177555',
-    projectId: 'login-41d34',
-    authDomain: 'login-41d34.firebaseapp.com',
-    storageBucket: 'login-41d34.appspot.com',
+    apiKey: 'AIzaSyArF55okxGLRNZ4I06DWkr1jq3B0AKsgJI',
+    appId: '1:723657801401:web:6eed3637acb030256d2568',
+    messagingSenderId: '723657801401',
+    projectId: 'kopimate-470c2',
+    authDomain: 'kopimate-470c2.firebaseapp.com',
+    storageBucket: 'kopimate-470c2.appspot.com',
+    measurementId: 'G-M9E2MY1NLX',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAAQSPx-jzSJqi7o93DbrvU3zO9kvCLGcg',
-    appId: '1:1073609177555:android:8e4534d541603ea4f75726',
-    messagingSenderId: '1073609177555',
-    projectId: 'login-41d34',
-    storageBucket: 'login-41d34.appspot.com',
+    apiKey: 'AIzaSyDv70tuVcZS1ql3fgqGR8lhXyuQ8EEf0eM',
+    appId: '1:723657801401:android:74d13f0c8dd56f7f6d2568',
+    messagingSenderId: '723657801401',
+    projectId: 'kopimate-470c2',
+    storageBucket: 'kopimate-470c2.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCTSEZUQO17bMtMHvPWas0V3oGgRewN-JM',
-    appId: '1:1073609177555:ios:16cc168250d5460ef75726',
-    messagingSenderId: '1073609177555',
-    projectId: 'login-41d34',
-    storageBucket: 'login-41d34.appspot.com',
+    apiKey: 'AIzaSyCNj6TxhODW10iJUHTpejMFEgx6sF9eKhg',
+    appId: '1:723657801401:ios:dc2be6eea227ebcf6d2568',
+    messagingSenderId: '723657801401',
+    projectId: 'kopimate-470c2',
+    storageBucket: 'kopimate-470c2.appspot.com',
+    iosClientId: '723657801401-ffb7sf6d0nl40q8dgvhdc03snmlp9uec.apps.googleusercontent.com',
     iosBundleId: 'com.example.kopimate',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCTSEZUQO17bMtMHvPWas0V3oGgRewN-JM',
-    appId: '1:1073609177555:ios:16cc168250d5460ef75726',
-    messagingSenderId: '1073609177555',
-    projectId: 'login-41d34',
-    storageBucket: 'login-41d34.appspot.com',
+    apiKey: 'AIzaSyCNj6TxhODW10iJUHTpejMFEgx6sF9eKhg',
+    appId: '1:723657801401:ios:dc2be6eea227ebcf6d2568',
+    messagingSenderId: '723657801401',
+    projectId: 'kopimate-470c2',
+    storageBucket: 'kopimate-470c2.appspot.com',
+    iosClientId: '723657801401-ffb7sf6d0nl40q8dgvhdc03snmlp9uec.apps.googleusercontent.com',
     iosBundleId: 'com.example.kopimate',
   );
 }
