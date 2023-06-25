@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kopimate">
    <application
-        android:label="kopimate"
+        android:label="KopiMate"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/kopimate">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCG6aSWh5rH8bMGx1ot7cRvWlrZ_y86GA8"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

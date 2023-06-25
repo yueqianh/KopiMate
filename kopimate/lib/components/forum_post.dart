@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +12,11 @@ class ForumPost extends StatefulWidget {
   final String user;
   final String postId;
   final List<String> likes;
- 
-  
+
   const ForumPost({
-    super.key, 
-    required this.msg, 
-    required this.user, 
+    super.key,
+    required this.msg,
+    required this.user,
     required this.postId,
     required this.likes,
   });
@@ -28,7 +26,6 @@ class ForumPost extends StatefulWidget {
 }
 
 class _ForumPostState extends State<ForumPost> {
-
   //user
   final user = FirebaseAuth.instance.currentUser!;
   bool isLiked = false;
@@ -50,7 +47,7 @@ class _ForumPostState extends State<ForumPost> {
 
     //Access the document in Firebase
     DocumentReference postRef =
-      FirebaseFirestore.instance.collection('User Posts').doc(widget.postId);
+        FirebaseFirestore.instance.collection('User Posts').doc(widget.postId);
 
     if (isLiked) {
       //add user email to "Likes" field
@@ -69,25 +66,25 @@ class _ForumPostState extends State<ForumPost> {
   void comment(String commentText) {
     //write the comment to firestore
     FirebaseFirestore.instance
-      .collection("User Posts")
-      .doc(widget.postId)
-      .collection("Comments")
-      .add({
-        "CommentText": commentText,
-        "CommentedBy": user.email,
-        "CommentTime": Timestamp.now()
-      });
+        .collection("User Posts")
+        .doc(widget.postId)
+        .collection("Comments")
+        .add({
+      "CommentText": commentText,
+      "CommentedBy": user.email,
+      "CommentTime": Timestamp.now()
+    });
   }
 
   //show dialog box for adding comment
   void showCommentDialog() {
     showDialog(
-      context: context, 
+      context: context,
       builder: (context) => AlertDialog(
-        title: Text("Add Comment"),
+        title: const Text("Add Comment"),
         content: TextField(
           controller: commentController,
-          decoration: InputDecoration(hintText: "Write a comment.."),
+          decoration: const InputDecoration(hintText: "Write a comment.."),
         ),
         actions: [
           //post button
@@ -101,8 +98,8 @@ class _ForumPostState extends State<ForumPost> {
 
               //clear controller
               commentController.clear();
-            }, 
-            child: Text("Post"),
+            },
+            child: const Text("Post"),
           ),
 
           //cancel button
@@ -113,8 +110,8 @@ class _ForumPostState extends State<ForumPost> {
 
               //clear controller
               commentController.clear();
-            }, 
-            child: Text("Cancel"),
+            },
+            child: const Text("Cancel"),
           ),
         ],
       ),
@@ -125,14 +122,14 @@ class _ForumPostState extends State<ForumPost> {
   void deletePost() {
     //show a dialog box for confirmation
     showDialog(
-      context: context, 
+      context: context,
       builder: (context) => AlertDialog(
         title: const Text("Delete Post"),
         content: const Text("Are you sure you want to delete this post?"),
         actions: [
           //cancel button
           TextButton(
-            onPressed: () => Navigator.pop(context), 
+            onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"),
           ),
 
@@ -141,32 +138,32 @@ class _ForumPostState extends State<ForumPost> {
             onPressed: () async {
               //delete comment from firestore
               final commentDocs = await FirebaseFirestore.instance
-                .collection("User Posts")
-                .doc(widget.postId)
-                .collection("Comments")
-                .get();
-              
-              for (var doc in commentDocs.docs) {
-                await FirebaseFirestore.instance
                   .collection("User Posts")
                   .doc(widget.postId)
                   .collection("Comments")
-                  .doc(doc.id)
-                  .delete();
+                  .get();
+
+              for (var doc in commentDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection("User Posts")
+                    .doc(widget.postId)
+                    .collection("Comments")
+                    .doc(doc.id)
+                    .delete();
               }
 
               //then delete post
               FirebaseFirestore.instance
-                .collection("User Posts")
-                .doc(widget.postId)
-                .delete()
-                .then((value) => print("post deleted"))
-                .catchError(
-                  (error) => print("failed to delete post: $error"));
+                  .collection("User Posts")
+                  .doc(widget.postId)
+                  .delete()
+                  .then((value) => print("post deleted"))
+                  .catchError(
+                      (error) => print("failed to delete post: $error"));
 
               //dismiss the dialog
               Navigator.pop(context);
-            }, 
+            },
             child: const Text("Delete"),
           ),
         ],
@@ -177,12 +174,12 @@ class _ForumPostState extends State<ForumPost> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        margin: EdgeInsets.only(top:25, left: 25, right: 25),
-        padding: EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
+      padding: const EdgeInsets.all(25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -202,14 +199,13 @@ class _ForumPostState extends State<ForumPost> {
                   //user
                   Text(
                     widget.user,
-                    style: TextStyle(color:Colors.grey[500]),
-                    ), 
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
                 ],
               ),
-            
+
               //delete button
-              if (widget.user == user.email)
-              DeleteButton(onTap: deletePost),
+              if (widget.user == user.email) DeleteButton(onTap: deletePost),
             ],
           ),
 
@@ -224,7 +220,7 @@ class _ForumPostState extends State<ForumPost> {
                 children: [
                   //like button
                   LikeButton(
-                    isLiked: isLiked, 
+                    isLiked: isLiked,
                     onTap: toggleLike,
                   ),
 
@@ -246,8 +242,7 @@ class _ForumPostState extends State<ForumPost> {
                   const SizedBox(height: 5),
 
                   //comment count
-                  Text('...'),
-                  
+                  const Text('...'),
                 ],
               ),
             ],
@@ -258,13 +253,14 @@ class _ForumPostState extends State<ForumPost> {
           //display comments
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-              .collection("User Posts")
-              .doc(widget.postId)
-              .collection("Comments")
-              .orderBy("CommentTime", descending: true).snapshots(),
+                .collection("User Posts")
+                .doc(widget.postId)
+                .collection("Comments")
+                .orderBy("CommentTime", descending: true)
+                .snapshots(),
             builder: (context, snapshot) {
               //show loading circle if no data yet
-              if(!snapshot.hasData) {
+              if (!snapshot.hasData) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -276,11 +272,11 @@ class _ForumPostState extends State<ForumPost> {
                 children: snapshot.data!.docs.map((doc) {
                   //get comment
                   final commentData = doc.data() as Map<String, dynamic>;
-                  
+
                   //return comment
                   return Comment(
-                    text: commentData["CommentText"], 
-                    user: commentData["CommentedBy"], 
+                    text: commentData["CommentText"],
+                    user: commentData["CommentedBy"],
                     time: formatDate(commentData["CommentTime"]),
                   );
                 }).toList(),

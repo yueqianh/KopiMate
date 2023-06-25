@@ -1,23 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kopimate/screens/forums/americano_forum.dart';
-import 'package:kopimate/screens/forums/cold_coffee_forum.dart';
-import 'package:kopimate/screens/forums/espresso_forum.dart';
-import 'package:kopimate/screens/forums/latte_forum.dart';
-import 'package:kopimate/screens/forums/vietnamese_iced_coffe_forum.dart';
-import 'package:kopimate/screens/shop_screen.dart';
-import '../components/drawer.dart';
+import 'package:kopimate/screens/forum_details.dart';
 import '../models/coffee_model.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({super.key});
+class ForumHome extends StatefulWidget {
+  ForumHome({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ForumHome> createState() => _ForumHomeState();
 }
 
-class _HomePageState extends State<HomePage>
+class _ForumHomeState extends State<ForumHome>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -100,13 +94,13 @@ class _HomePageState extends State<HomePage>
           //sign out button
           IconButton(
             onPressed: signOut,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(top: 15),
+          padding: const EdgeInsets.only(top: 15),
           child: ListView(
             children: [
               const Padding(
@@ -122,7 +116,8 @@ class _HomePageState extends State<HomePage>
               ),
 
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 width: MediaQuery.of(context).size.width,
                 height: 60,
                 alignment: Alignment.center,
@@ -184,20 +179,20 @@ class _HomePageState extends State<HomePage>
                 //coffee boxes
                 child: [
                   GridView.count(
-                    physics: ScrollPhysics(),
+                    physics: const ScrollPhysics(),
                     crossAxisCount: 2,
                     shrinkWrap: true,
                     childAspectRatio: (150 / 195),
                     children: [
                       for (int i = 0; i < display_list.length; i++)
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          margin:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 13),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 13),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Color.fromARGB(255, 30, 29, 28),
+                              color: const Color.fromARGB(255, 30, 29, 28),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.4),
@@ -215,7 +210,7 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => AmericanoForum(
+                                        builder: (context) => ForumDetails(
                                             coffee_type: display_list[i]),
                                       ),
                                     );
@@ -225,7 +220,7 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LatteForum(
+                                        builder: (context) => ForumDetails(
                                             coffee_type: display_list[i]),
                                       ),
                                     );
@@ -235,7 +230,7 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ColdCoffeeForum(
+                                        builder: (context) => ForumDetails(
                                             coffee_type: display_list[i]),
                                       ),
                                     );
@@ -245,7 +240,7 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => EspressoForum(
+                                        builder: (context) => ForumDetails(
                                             coffee_type: display_list[i]),
                                       ),
                                     );
@@ -254,15 +249,14 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            VietnameseIceCoffeeForum(
-                                                coffee_type: display_list[i]),
+                                        builder: (context) => ForumDetails(
+                                            coffee_type: display_list[i]),
                                       ),
                                     );
                                   }
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.all(10),
+                                  margin: const EdgeInsets.all(10),
                                   child: Image.asset(
                                     "lib/images/${display_list[i].coffee_name!}.png",
                                     width: 120,
@@ -272,7 +266,7 @@ class _HomePageState extends State<HomePage>
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.only(bottom: 8),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
@@ -290,15 +284,16 @@ class _HomePageState extends State<HomePage>
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFfe57734),
+                                        color: const Color(0xFfe57734),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: const Icon(

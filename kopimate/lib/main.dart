@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kopimate/screens/auth.dart';
-import 'package:kopimate/screens/home.dart';
-import 'package:kopimate/screens/shop_screen.dart';
+import 'package:kopimate/screens/auth_screen.dart';
+import 'package:kopimate/screens/shop_home.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -18,12 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'KopiMate',
-      theme: ThemeData(
-          /* primarySwatch: Colors.brown,
-          appBarTheme: const AppBarTheme(
-            color: Colors.brown,
-          ),*/
-          useMaterial3: true),
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.brown),
       home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -63,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: <Widget>[
         const ShopScreen(),
-        HomePage(),
+        const AuthScreen(),
       ][selectedIndex],
     );
   }

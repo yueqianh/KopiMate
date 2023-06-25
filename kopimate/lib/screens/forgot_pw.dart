@@ -7,10 +7,10 @@ class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
 
   @override
-  State<ForgotPassword> createState() =>  _ForgotPasswordState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class  _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final emailController = TextEditingController();
 
   @override
@@ -20,26 +20,26 @@ class  _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   Future passwordReset() async {
-   try {
+    try {
       await FirebaseAuth.instance
-        .sendPasswordResetEmail(email: emailController.text.trim());
-        showDialog(
-        context: this.context, 
-        builder: (context) {
-          return AlertDialog(
-            content: Text('Password reset link sent!'),
-          );
-        });
-   } on FirebaseAuthException catch (e) {
-    print(e);
+          .sendPasswordResetEmail(email: emailController.text.trim());
       showDialog(
-        context: this.context, 
-        builder: (context) {
-          return AlertDialog(
-            content: Text(e.message.toString()),
-          );
-        });
-   }
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              content: Text('Password reset link sent!'),
+            );
+          });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(e.message.toString()),
+            );
+          });
+    }
   }
 
   @override
@@ -52,26 +52,26 @@ class  _ForgotPasswordState extends State<ForgotPassword> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: Text(
               'Enter your email for your password reset link',
               textAlign: TextAlign.center,
-              ),
+            ),
           ),
 
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           //email textfield
           UserTextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                ),
+            controller: emailController,
+            hintText: 'Email',
+            obscureText: false,
+          ),
 
           MaterialButton(
-            onPressed: passwordReset,
-            child: Text('Reset password'),
-            color: Color.fromARGB(255, 208, 185, 174))
+              onPressed: passwordReset,
+              color: const Color.fromARGB(255, 208, 185, 174),
+              child: const Text('Reset password'))
         ],
       ),
     );
