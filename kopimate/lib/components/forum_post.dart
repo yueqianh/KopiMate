@@ -64,6 +64,23 @@ class _ForumPostState extends State<ForumPost> {
 
   //add comment
   void comment(String commentText) {
+    if (commentText.isEmpty) {
+      showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          backgroundColor: Colors.white,
+          title: Center(
+            child: Text(
+              'Unable to create comment',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        );
+      },
+    );
+    return;
+    } else {
     //write the comment to firestore
     FirebaseFirestore.instance
         .collection("User Posts")
@@ -74,6 +91,7 @@ class _ForumPostState extends State<ForumPost> {
       "CommentedBy": user.email,
       "CommentTime": Timestamp.now()
     });
+    }
   }
 
   //show dialog box for adding comment
@@ -92,6 +110,7 @@ class _ForumPostState extends State<ForumPost> {
             onPressed: () {
               //add comment
               comment(commentController.text);
+              
 
               //pop box
               Navigator.pop(context);

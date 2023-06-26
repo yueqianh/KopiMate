@@ -23,7 +23,7 @@ class _ForumHomeState extends State<ForumHome>
     CoffeeModel('Espresso'),
     CoffeeModel('Americano'),
     CoffeeModel('Cold Coffee'),
-    CoffeeModel('Vietnamese Iced Coffee'),
+    CoffeeModel('Viet Iced Coffee'),
   ];
 
   List<CoffeeModel> display_list = List.from(img);

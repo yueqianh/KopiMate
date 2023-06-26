@@ -23,6 +23,23 @@ class _ForumDetailsState extends State<ForumDetails> {
 
 //post message function
   void post() {
+    //error if post is empty
+    if (textController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            backgroundColor: Colors.white,
+            title: Center(
+              child: Text(
+                'Unable to create post',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          );
+        },
+      );
+    }
     //only post if box is not empty
     if (textController.text.isNotEmpty) {
       //store in firebase

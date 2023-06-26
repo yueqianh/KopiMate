@@ -30,6 +30,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
     );
 
+    if (passwordController.text != confirmPasswordController.text) {
+      Navigator.pop(context);
+      showErrorMessage("Passwords don't match!");
+      return;
+    }
     // try sign up
     try {
       // check if password is confirmed
@@ -38,12 +43,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: usernameController.text,
           password: passwordController.text,
         );
-      } else {
-        // error message
-        showErrorMessage("Passwords don't match!");
       }
       // pop the loading circle
+      // ignore: use_build_context_synchronously
       Navigator.of(context, rootNavigator: true).pop();
+
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
       Navigator.pop(context);
@@ -58,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Color.fromARGB(255, 185, 98, 44),
           title: Center(
             child: Text(
               message,
