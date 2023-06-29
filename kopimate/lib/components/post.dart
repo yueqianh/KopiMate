@@ -67,16 +67,34 @@ class _PostState extends State<Post> {
 
   //add comment
   void comment(String commentText) {
-    //write the comment to firestore
-    FirebaseFirestore.instance
-        .collection("${widget.type} Posts")
-        .doc(widget.postId)
-        .collection("Comments")
-        .add({
-      "CommentText": commentText,
-      "CommentedBy": user.email,
-      "CommentTime": Timestamp.now()
-    });
+    //error if comment is empty
+    if (commentController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            backgroundColor: Colors.white,
+            title: Center(
+              child: Text(
+                'Unable to create comment',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      //write the comment to firestore
+      FirebaseFirestore.instance
+          .collection("${widget.type} Posts")
+          .doc(widget.postId)
+          .collection("Comments")
+          .add({
+        "CommentText": commentText,
+        "CommentedBy": user.email,
+        "CommentTime": Timestamp.now()
+      });
+    }
   }
 
   //show dialog box for adding comment
@@ -228,9 +246,7 @@ class _PostState extends State<Post> {
                           Text(widget.likes.length.toString()),
                         ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       Row(
                         children: [
                           //comment button
@@ -245,13 +261,14 @@ class _PostState extends State<Post> {
                         ],
                       ),
                       const Spacer(),
-                      Row(
-                        children: [
-                          DeleteButton(onTap: deletePost),
-                          const SizedBox(width: 5),
-                          const Text('Delete Post'),
-                        ],
-                      ),
+                      if (widget.user != user.email)
+                        Row(
+                          children: [
+                            DeleteButton(onTap: deletePost),
+                            const SizedBox(width: 5),
+                            const Text('Delete Post'),
+                          ],
+                        ),
                     ]),
                   ],
                 ),

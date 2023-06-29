@@ -223,8 +223,9 @@ class _ForumPostState extends State<ForumPost> {
                 ],
               ),
 
-              //delete button
-              if (widget.user == user.email) DeleteButton(onTap: deletePost),
+              //delete button only for user that posted it
+              if (widget.user != user.email)  
+              DeleteButton(onTap: deletePost),
             ],
           ),
 
