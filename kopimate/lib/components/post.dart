@@ -261,7 +261,7 @@ class _PostState extends State<Post> {
                         ],
                       ),
                       const Spacer(),
-                      if (widget.user != user.email)
+                      if (widget.user == user.email)
                         Row(
                           children: [
                             DeleteButton(onTap: deletePost),
