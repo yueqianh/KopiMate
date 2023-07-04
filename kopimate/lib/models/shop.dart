@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// firestoreのドキュメントを扱うクラスBookを作る。
+// Create a class Shop that handles firestore documents.
 class Shop {
-  // ドキュメントを扱うDocumentSnapshotを引数にしたコンストラクタを作る
+  // Create a constructor with a DocumentSnapshot argument that handles the document
   Shop(DocumentSnapshot doc) {
-    //　ドキュメントの持っているフィールド'title'をこのBookのフィールドtitleに代入
+    //　Assign the fields of the document to the fields of this Shop
     name = doc['name'];
     address = doc['address'];
     imgName = doc['imgName'];
   }
-  // Bookで扱うフィールドを定義しておく。
+  // Define the fields handled by Shop
   String name = '';
   String address = '';
   String imgName = '';

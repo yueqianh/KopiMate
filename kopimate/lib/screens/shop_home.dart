@@ -44,6 +44,7 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
             ),
             const SizedBox(height: 10),
+
             Expanded(
               child: Consumer<ShopModel>(
                 builder: (context, model, child) {
@@ -98,6 +99,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                       }),
                                 ),
                                 const SizedBox(width: 10),
+                                
                                 Expanded(
                                   child: ListTile(
                                     horizontalTitleGap: 10,

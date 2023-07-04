@@ -6,12 +6,12 @@ class ShopModel extends ChangeNotifier {
   List<Shop> shops = [];
 
   Future<void> fetchShops() async {
-    // Firestoreからコレクション'books'(QuerySnapshot)を取得してdocsに代入。
+    // Get the collection 'shops' (QuerySnapshot) from Firestore and assign it to docs.
     final docs = await FirebaseFirestore.instance.collection('shops').get();
 
-    // getter docs: docs(List<QueryDocumentSnapshot<T>>型)のドキュメント全てをリストにして取り出す。
-    // map(): Listの各要素をBookに変換
-    // toList(): Map()から返ってきたIterable→Listに変換する。
+    // getter docs: Extract all documents of docs (List<QueryDocumentSnapshot<T>> type) as a list
+    // map(): Convert each element of List to Shops
+    // toList(): Convert from Iterable to List returned from Map().
     final shops = docs.docs.map((doc) => Shop(doc)).toList();
     this.shops = shops;
     notifyListeners();
