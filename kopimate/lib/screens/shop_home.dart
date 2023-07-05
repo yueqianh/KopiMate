@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:kopimate/models/shop_model.dart';
 import 'package:kopimate/screens/shop_detail.dart';
 import 'package:kopimate/services/firebase_storage_service.dart';
@@ -14,11 +15,41 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   late GoogleMapController mapController;
+  Set<Marker> markers = {};
 
   final LatLng _center = const LatLng(1.3521, 103.8198);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        return Future.error("Location permission denied");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location permissions are permanently denied');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    return position;
   }
 
   @override
@@ -29,11 +60,35 @@ class _ShopScreenState extends State<ShopScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Nearby Shops'),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () async {
+                  Position position = await _determinePosition();
+
+                  mapController.animateCamera(CameraUpdate.newCameraPosition(
+                      CameraPosition(
+                          target: LatLng(position.latitude, position.longitude),
+                          zoom: 14)));
+
+                  markers.clear();
+
+                  markers.add(Marker(
+                      markerId: const MarkerId('currentLocation'),
+                      position: LatLng(position.latitude, position.longitude)));
+
+                  setState(() {});
+                },
+                child: Icon(Icons.location_on),
+              ),
+            ),
+          ],
         ),
         body: Column(
           children: [
             SizedBox(
-              height: 200,
+              height: 300,
               width: double.maxFinite,
               child: GoogleMap(
                 onMapCreated: _onMapCreated,
@@ -41,10 +96,10 @@ class _ShopScreenState extends State<ShopScreen> {
                   target: _center,
                   zoom: 11.0,
                 ),
+                markers: markers,
               ),
             ),
             const SizedBox(height: 10),
-
             Expanded(
               child: Consumer<ShopModel>(
                 builder: (context, model, child) {
@@ -99,7 +154,6 @@ class _ShopScreenState extends State<ShopScreen> {
                                       }),
                                 ),
                                 const SizedBox(width: 10),
-                                
                                 Expanded(
                                   child: ListTile(
                                     horizontalTitleGap: 10,

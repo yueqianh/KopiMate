@@ -241,7 +241,8 @@ class _ForumHomeState extends State<ForumHome>
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ForumDetails(
-                                            coffee_type: display_list[i]),
+                                            coffee_type: display_list[i]
+                                            ),
                                       ),
                                     );
                                     //vietnamese coffee forum
