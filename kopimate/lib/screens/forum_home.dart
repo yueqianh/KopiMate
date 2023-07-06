@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kopimate/screens/forum_details.dart';
+import 'package:kopimate/screens/shop_home.dart';
+import '../components/drawer.dart';
 import '../models/coffee_model.dart';
 
 class ForumHome extends StatefulWidget {
@@ -13,6 +15,7 @@ class ForumHome extends StatefulWidget {
 
 class _ForumHomeState extends State<ForumHome>
     with SingleTickerProviderStateMixin {
+  int selectedIndex = 0;
   late TabController _tabController;
 
   //current user
@@ -62,6 +65,17 @@ class _ForumHomeState extends State<ForumHome>
     FirebaseAuth.instance.signOut();
   }
 
+  void goToShops() {
+    //pop menu
+    Navigator.pop(context);
+    
+    //go to shops page
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => ShopScreen()),
+    );
+  }
   /*
   @override
   Widget build(BuildContext context) {
@@ -90,6 +104,7 @@ class _ForumHomeState extends State<ForumHome>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forums'),
+        /*
         actions: [
           //sign out button
           IconButton(
@@ -97,6 +112,7 @@ class _ForumHomeState extends State<ForumHome>
             icon: const Icon(Icons.logout),
           )
         ],
+        */
       ),
       body: SafeArea(
         child: Padding(
@@ -204,9 +220,6 @@ class _ForumHomeState extends State<ForumHome>
                             children: [
                               InkWell(
                                 onTap: () {
-                                  //americano forum
-                                  if (display_list[i].coffee_name ==
-                                      'Americano') {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -214,47 +227,6 @@ class _ForumHomeState extends State<ForumHome>
                                             coffee_type: display_list[i]),
                                       ),
                                     );
-                                    //latte forum
-                                  } else if (display_list[i].coffee_name ==
-                                      'Latte') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ForumDetails(
-                                            coffee_type: display_list[i]),
-                                      ),
-                                    );
-                                    //cold coffee forum
-                                  } else if (display_list[i].coffee_name ==
-                                      'Cold Coffee') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ForumDetails(
-                                            coffee_type: display_list[i]),
-                                      ),
-                                    );
-                                    //espresso forum
-                                  } else if (display_list[i].coffee_name ==
-                                      'Espresso') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ForumDetails(
-                                            coffee_type: display_list[i]
-                                            ),
-                                      ),
-                                    );
-                                    //vietnamese coffee forum
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ForumDetails(
-                                            coffee_type: display_list[i]),
-                                      ),
-                                    );
-                                  }
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(10),
@@ -317,6 +289,10 @@ class _ForumHomeState extends State<ForumHome>
             ],
           ),
         ),
+      ),
+      drawer: MyDrawer(
+        onSignOut: signOut,
+        onShopTap: goToShops,
       ),
     );
   }

@@ -18,12 +18,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'KopiMate',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.brown),
-      home: const MyHomePage(),
+      home: const AuthScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -62,3 +63,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/

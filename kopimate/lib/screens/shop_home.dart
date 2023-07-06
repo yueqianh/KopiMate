@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kopimate/models/shop_model.dart';
 import 'package:kopimate/screens/shop_detail.dart';
@@ -13,9 +14,12 @@ class ShopScreen extends StatefulWidget {
   State<ShopScreen> createState() => _ShopScreenState();
 }
 
-class _ShopScreenState extends State<ShopScreen> {
+class _ShopScreenState extends State<ShopScreen> { 
+  
+  bool nearby = false;
   late GoogleMapController mapController;
   Set<Marker> markers = {};
+
 
   final LatLng _center = const LatLng(1.3521, 103.8198);
 
@@ -52,15 +56,24 @@ class _ShopScreenState extends State<ShopScreen> {
     return position;
   }
 
+ 
+  
+    @override
+  void initState() {
+    super.initState();
+  }
+ 
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
+    //access firebase shops
     return ChangeNotifierProvider<ShopModel>(
       create: (_) => ShopModel()..fetchShops(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Nearby Shops'),
           actions: [
+            //button to get user current location
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -87,6 +100,7 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
         body: Column(
           children: [
+            //google maps
             SizedBox(
               height: 300,
               width: double.maxFinite,
@@ -100,6 +114,9 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
             ),
             const SizedBox(height: 10),
+            
+            
+            //list of shops
             Expanded(
               child: Consumer<ShopModel>(
                 builder: (context, model, child) {
@@ -120,11 +137,13 @@ class _ShopScreenState extends State<ShopScreen> {
                                         ShopDetail(shop: shops[index]),
                                   ));
                             },
+
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
                                   width: 120,
                                   height: 100,
+                                  //picture of the shops
                                   child: FutureBuilder(
                                       future: storage
                                           .downloadURL(shops[index].imgName),
@@ -154,11 +173,14 @@ class _ShopScreenState extends State<ShopScreen> {
                                       }),
                                 ),
                                 const SizedBox(width: 10),
+                                //name and address of the shops
                                 Expanded(
                                   child: ListTile(
                                     horizontalTitleGap: 10,
                                     title: Text(shops[index].name),
-                                    subtitle: Text(shops[index].address),
+                                    subtitle: Text(
+                                      nearby ? 'Distance = ${shops[index].address}' 
+                                             : ''),
                                     isThreeLine: true,
                                     contentPadding: const EdgeInsets.all(0),
                                   ),
