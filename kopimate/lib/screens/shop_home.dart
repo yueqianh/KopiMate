@@ -57,12 +57,6 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
  
-  
-    @override
-  void initState() {
-    super.initState();
-  }
- 
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();

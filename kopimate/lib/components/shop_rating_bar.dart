@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class CafeRatingBar extends StatelessWidget {
-  const CafeRatingBar(
-      {required Key key,
+class ShopRatingBar extends StatelessWidget {
+  const ShopRatingBar(
+      {Key? key,
       required this.initialRating,
       this.itemSize = 40,
       this.ignoreGestures = false,

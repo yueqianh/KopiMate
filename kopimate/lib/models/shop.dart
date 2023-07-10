@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 // Create a class Shop that handles firestore documents.
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Shop {
   // Create a constructor with a DocumentSnapshot argument that handles the document
   Shop(DocumentSnapshot doc) {
@@ -8,6 +10,7 @@ class Shop {
     name = doc['name'];
     address = doc['address'];
     imgName = doc['imgName'];
+
   }
   // Define the fields handled by Shop
   String name = '';
