@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,18 +19,15 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> { 
-  
-  bool nearby = false;
   late GoogleMapController mapController;
   Set<Marker> markers = {};
-
-
   final LatLng _center = const LatLng(1.3521, 103.8198);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
+  //user current location
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -56,10 +57,31 @@ class _ShopScreenState extends State<ShopScreen> {
     return position;
   }
 
+
+
+//Shortest Distance Function definition:
+double calculateDistance (double lat1,double lng1,double lat2,double lng2){
+double radEarth =6.3781*( pow(10.0,6.0));
+double phi1= lat1*(pi/180);
+double phi2 = lat2*(pi/180);
+    
+double delta1=(lat2-lat1)*(pi/180);
+double delta2=(lng2-lng1)*(pi/180);
+    
+double cal1 = sin(delta1/2)*sin(delta1/2)+(cos(phi1)*cos(phi2)*sin(delta2/2)*sin(delta2/2));
+    
+double cal2= 2 * atan2((sqrt(cal1)), (sqrt(1-cal1)));
+double distance =radEarth*cal2;
+    
+return (distance);   
+}
+
  
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
+
+
     //access firebase shops
     return ChangeNotifierProvider<ShopModel>(
       create: (_) => ShopModel()..fetchShops(),
@@ -172,9 +194,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                   child: ListTile(
                                     horizontalTitleGap: 10,
                                     title: Text(shops[index].name),
-                                    subtitle: Text(
-                                      nearby ? 'Distance = ${shops[index].address}' 
-                                             : ''),
+                                    subtitle: Text("Reviews: "),
                                     isThreeLine: true,
                                     contentPadding: const EdgeInsets.all(0),
                                   ),
