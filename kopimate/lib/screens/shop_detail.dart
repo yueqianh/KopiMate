@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kopimate/components/user_shop_rating.dart';
-import 'package:kopimate/components/shop_rating_bar.dart';
 import 'package:kopimate/services/firebase_storage_service.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import '../components/user_textfield.dart';

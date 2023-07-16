@@ -1,19 +1,29 @@
+import 'package:flutter/material.dart';
 
+import '../services/firebase_storage_service.dart';
 
-// Create a class Shop that handles firestore documents.
-import 'package:cloud_firestore/cloud_firestore.dart';
+class Shop extends StatefulWidget {
+  final String address;
+  final String imgName;
+  final String name;
+  final String shopId;
 
-class Shop {
-  // Create a constructor with a DocumentSnapshot argument that handles the document
-  Shop(DocumentSnapshot doc) {
-    //　Assign the fields of the document to the fields of this Shop
-    name = doc['name'];
-    address = doc['address'];
-    imgName = doc['imgName'];
+  const Shop(
+      {super.key,
+      required this.address,
+      required this.imgName,
+      required this.name,
+      required this.shopId});
 
+  @override
+  State<Shop> createState() => _ShopState();
+}
+
+class _ShopState extends State<Shop> {
+  final Storage storage = Storage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
-  // Define the fields handled by Shop
-  String name = '';
-  String address = '';
-  String imgName = '';
 }

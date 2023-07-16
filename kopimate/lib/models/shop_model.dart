@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kopimate/models/shop.dart';
 import 'package:flutter/cupertino.dart';
 
+/*
 class ShopModel extends ChangeNotifier {
   List<Shop> shops = [];
 
@@ -17,3 +18,4 @@ class ShopModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+*/
