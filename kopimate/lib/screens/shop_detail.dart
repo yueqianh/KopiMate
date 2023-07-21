@@ -30,7 +30,7 @@ class _ShopDetailState extends State<ShopDetail> {
     //text controller
     final textController = TextEditingController();
     
-    //post message function
+    //post review function
     void post() {
     //error if post is empty
     if (textController.text.isEmpty) {
