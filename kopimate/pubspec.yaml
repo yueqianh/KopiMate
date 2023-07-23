@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  path: any
   flutter:
     sdk: flutter
 
@@ -52,9 +53,9 @@ dependencies:
   http: ^0.13.4
   flutter_rating_bar: ^4.0.1
   image_picker: ^1.0.1
-
-  
-    
+  mockito: ^5.4.2
+  firebase_storage_mocks: ^0.6.1
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:

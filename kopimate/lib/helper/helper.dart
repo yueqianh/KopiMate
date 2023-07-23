@@ -14,6 +14,4 @@ String formatDate(Timestamp timestamp) {
   String formattedDate = '$day/$month/$year';
 
   return formattedDate;
-
-  
 }

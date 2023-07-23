@@ -6,9 +6,9 @@ import 'package:kopimate/models/coffee_model.dart';
 import '../../components/post.dart';
 
 class ForumDetails extends StatefulWidget {
-  final CoffeeModel coffee_type;
+  final CoffeeModel coffeeType;
 
-  ForumDetails({required this.coffee_type});
+  const ForumDetails({super.key, required this.coffeeType});
 
   @override
   State<ForumDetails> createState() => _ForumDetailsState();
@@ -44,7 +44,7 @@ class _ForumDetailsState extends State<ForumDetails> {
     if (textController.text.isNotEmpty) {
       //store in firebase
       FirebaseFirestore.instance
-          .collection("${widget.coffee_type.coffee_name!} Posts")
+          .collection("${widget.coffeeType.coffeeName!} Posts")
           .add({
         'UserEmail': user.email,
         'Message': textController.text,
@@ -59,7 +59,7 @@ class _ForumDetailsState extends State<ForumDetails> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text('${widget.coffee_type.coffee_name!} Forum'),
+        title: Text('${widget.coffeeType.coffeeName!} Forum'),
         elevation: 0,
       ),
       body: Center(
@@ -69,7 +69,7 @@ class _ForumDetailsState extends State<ForumDetails> {
             Expanded(
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection("${widget.coffee_type.coffee_name!} Posts")
+                    .collection("${widget.coffeeType.coffeeName!} Posts")
                     .orderBy(
                       "TimeStamp",
                       descending: false,
@@ -83,7 +83,7 @@ class _ForumDetailsState extends State<ForumDetails> {
                         //get message
                         final post = snapshot.data!.docs[index];
                         return Post(
-                          type: widget.coffee_type.coffee_name!,
+                          type: widget.coffeeType.coffeeName!,
                           msg: post['Message'],
                           user: post['UserEmail'],
                           postId: post.id,

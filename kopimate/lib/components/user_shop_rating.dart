@@ -33,22 +33,25 @@ class _UserShopRatingState extends State<UserShopRating> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Rate this Shop"),
-        content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start,children: [
-          const Text("Leave a rating!", style: TextStyle(fontSize: 20)),
-          const SizedBox(height: 20),
-          RatingBar.builder(
-            initialRating: 0,
-            itemSize: 40,
-            itemBuilder: (context, _) =>
-                Icon(Icons.coffee, color: Colors.amber),
-            onRatingUpdate: (rating) => setState(() {
-              FirebaseFirestore.instance
-                  .collection("${widget.type} Reviews")
-                  .doc(widget.postId)
-                  .update({'Rating': rating});
-            }),
-          ),
-        ]),
+        content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Leave a rating!", style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 20),
+              RatingBar.builder(
+                initialRating: 0,
+                itemSize: 40,
+                itemBuilder: (context, _) =>
+                    const Icon(Icons.coffee, color: Colors.amber),
+                onRatingUpdate: (rating) => setState(() {
+                  FirebaseFirestore.instance
+                      .collection("${widget.type} Reviews")
+                      .doc(widget.postId)
+                      .update({'Rating': rating});
+                }),
+              ),
+            ]),
         actions: [
           //ok button
           TextButton(
@@ -83,9 +86,9 @@ class _UserShopRatingState extends State<UserShopRating> {
                   .collection("${widget.type} Reviews")
                   .doc(widget.postId)
                   .delete()
-                  .then((value) => print("review deleted"))
+                  .then((value) => debugPrint("review deleted"))
                   .catchError(
-                      (error) => print("failed to delete review: $error"));
+                      (error) => debugPrint("failed to delete review: $error"));
 
               //dismiss the dialog
               Navigator.pop(context);
@@ -145,7 +148,7 @@ class _UserShopRatingState extends State<UserShopRating> {
                             initialRating: widget.rating,
                             itemSize: 20,
                             itemBuilder: (context, _) =>
-                                Icon(Icons.coffee, color: Colors.amber),
+                                const Icon(Icons.coffee, color: Colors.amber),
                             onRatingUpdate: (rating) => setState(() {
                               FirebaseFirestore.instance
                                   .collection("${widget.type} Reviews")
@@ -155,9 +158,9 @@ class _UserShopRatingState extends State<UserShopRating> {
                           ),
                           //rating button
                           if (widget.user == user.email)
-                          TextButton(
-                              onPressed: () => leaveRating(),
-                              child: const Text('Rate?')),
+                            TextButton(
+                                onPressed: () => leaveRating(),
+                                child: const Text('Rate?')),
                         ]),
 
                         if (widget.user == user.email)

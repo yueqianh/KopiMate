@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password: passwordController.text,
       );
       // pop the loading circle
-      Navigator.of(context, rootNavigator: true).pop();
+      if (context.mounted) Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
       Navigator.pop(context);

@@ -1,5 +1,5 @@
 class CoffeeModel {
-  String? coffee_name;
+  String? coffeeName;
 
-  CoffeeModel(this.coffee_name);
+  CoffeeModel(this.coffeeName);
 }

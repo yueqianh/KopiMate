@@ -178,12 +178,12 @@ class _PostState extends State<Post> {
                   .collection("${widget.type} Posts")
                   .doc(widget.postId)
                   .delete()
-                  .then((value) => print("post deleted"))
+                  .then((value) => debugPrint("post deleted"))
                   .catchError(
-                      (error) => print("failed to delete post: $error"));
+                      (error) => debugPrint("failed to delete post: $error"));
 
               //dismiss the dialog
-              Navigator.pop(context);
+              if (context.mounted) Navigator.of(context).pop();
             },
             child: const Text("Delete"),
           ),

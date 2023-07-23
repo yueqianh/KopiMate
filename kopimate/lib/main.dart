@@ -18,13 +18,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'KopiMate',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.brown),
-      home: const AuthScreen(),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -37,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Home Page in main manages the bottom navigation bar.
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -63,4 +63,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-*/

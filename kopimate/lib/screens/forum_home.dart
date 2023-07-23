@@ -3,11 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kopimate/screens/forum_details.dart';
 import 'package:kopimate/screens/shop_home.dart';
-import '../components/drawer.dart';
 import '../models/coffee_model.dart';
 
 class ForumHome extends StatefulWidget {
-  ForumHome({super.key});
+  const ForumHome({super.key});
 
   @override
   State<ForumHome> createState() => _ForumHomeState();
@@ -29,14 +28,14 @@ class _ForumHomeState extends State<ForumHome>
     CoffeeModel('Viet Iced Coffee'),
   ];
 
-  List<CoffeeModel> display_list = List.from(img);
+  List<CoffeeModel> displayList = List.from(img);
 
   //search bar function
   void updateList(String s) {
     setState(() {
-      display_list = img
+      displayList = img
           .where((element) =>
-              element.coffee_name!.toLowerCase().contains(s.toLowerCase()))
+              element.coffeeName!.toLowerCase().contains(s.toLowerCase()))
           .toList();
     });
   }
@@ -68,43 +67,19 @@ class _ForumHomeState extends State<ForumHome>
   void goToShops() {
     //pop menu
     Navigator.pop(context);
-    
+
     //go to shops page
     Navigator.push(
-      context, 
-      MaterialPageRoute(
-        builder: (context) => ShopScreen()),
+      context,
+      MaterialPageRoute(builder: (context) => const ShopScreen()),
     );
   }
-  /*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[900],
-        actions: [
-          IconButton(
-            onPressed: signOut,
-            icon: Icon(Icons.logout),
-          )
-        ],
-      ),
-      body: Center(
-          child: Text(
-        "LOGGED IN AS: " + user.email!,
-        style: TextStyle(fontSize: 20),
-      )),
-    );
-  }
-  */
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forums'),
-        /*
         actions: [
           //sign out button
           IconButton(
@@ -112,7 +87,6 @@ class _ForumHomeState extends State<ForumHome>
             icon: const Icon(Icons.logout),
           )
         ],
-        */
       ),
       body: SafeArea(
         child: Padding(
@@ -130,7 +104,6 @@ class _ForumHomeState extends State<ForumHome>
                   ),
                 ),
               ),
-
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -159,38 +132,7 @@ class _ForumHomeState extends State<ForumHome>
                   ),
                 ),
               ),
-
-              //filter bar
-              /* 
-              TabBar(
-                  controller: _tabController,
-                  labelColor: Color(0xFFE57734),
-                  unselectedLabelColor: Colors.white.withOpacity(0.5),
-                  isScrollable: true,
-                  indicator: UnderlineTabIndicator(
-                    borderSide: BorderSide(
-                      width: 3,
-                      color: Color(0xFFE57734),
-                    ),
-                    insets: EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                  labelStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  labelPadding: EdgeInsets.symmetric(horizontal: 20),
-                  tabs: [
-                    Tab(text: "Hot Coffee"),
-                    Tab(text: "Cold Coffee"),
-                    Tab(text: "Specialty Coffee"),
-                  ]),
-              
-              TabBarView(
-                controller: _tabController,
-                children: children), 
-              
-              */
-
               const SizedBox(height: 10),
-
               Center(
                 //coffee boxes
                 child: [
@@ -200,7 +142,7 @@ class _ForumHomeState extends State<ForumHome>
                     shrinkWrap: true,
                     childAspectRatio: (150 / 195),
                     children: [
-                      for (int i = 0; i < display_list.length; i++)
+                      for (int i = 0; i < displayList.length; i++)
                         Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
@@ -220,18 +162,18 @@ class _ForumHomeState extends State<ForumHome>
                             children: [
                               InkWell(
                                 onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ForumDetails(
-                                            coffee_type: display_list[i]),
-                                      ),
-                                    );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ForumDetails(
+                                          coffeeType: displayList[i]),
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(10),
                                   child: Image.asset(
-                                    "lib/images/${display_list[i].coffee_name!}.png",
+                                    "lib/images/${displayList[i].coffeeName!}.png",
                                     width: 120,
                                     height: 120,
                                     fit: BoxFit.contain,
@@ -245,7 +187,7 @@ class _ForumHomeState extends State<ForumHome>
                                   child: Column(
                                     children: [
                                       Text(
-                                        display_list[i].coffee_name!,
+                                        displayList[i].coffeeName!,
                                         style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -289,10 +231,6 @@ class _ForumHomeState extends State<ForumHome>
             ],
           ),
         ),
-      ),
-      drawer: MyDrawer(
-        onSignOut: signOut,
-        onShopTap: goToShops,
       ),
     );
   }

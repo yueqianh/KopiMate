@@ -47,7 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // pop the loading circle
       // ignore: use_build_context_synchronously
       Navigator.of(context, rootNavigator: true).pop();
-
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
       Navigator.pop(context);
@@ -62,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Color.fromARGB(255, 185, 98, 44),
+          backgroundColor: const Color.fromARGB(255, 185, 98, 44),
           title: Center(
             child: Text(
               message,

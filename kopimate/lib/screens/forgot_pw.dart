@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../components/user_textfield.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -23,15 +22,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
-      showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text('Password reset link sent!'),
-            );
-          });
+      if (context.mounted) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                content: Text('Password reset link sent!'),
+              );
+            });
+      }
     } on FirebaseAuthException catch (e) {
-      print(e);
       showDialog(
           context: context,
           builder: (context) {
