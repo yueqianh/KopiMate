@@ -8,8 +8,6 @@ By: Kotaro Yong and Huang Yueqian</p>
 <p style="text-align: right">
 Level of Achievement: Apollo 11</p>
 
-
-
 ---
 
 **Download the Milestone 3 Release Android APK for testing here: [https://github.com/yueqianh/KopiMate/releases/tag/v0.3](https://github.com/yueqianh/KopiMate/releases/tag/v0.3)   **
@@ -179,26 +177,7 @@ We created multiple test files for Unit Testing and Widget Testing for the Flutt
 
 **Unit Test 1: Testing that button has text.**
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image1.png "image_tooltip")
-
-
 **Unit Test 2: Testing that the formatDate function converts DateTime from Cloud Firestore to date-time strings in the “DD/M/YYYY” format.**
-
-
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image2.png "image_tooltip")
-
-
-
-
 
 ## 3.2 System Testing
 
@@ -229,22 +208,6 @@ Trying to add a shop with no image will show the corresponding error and prevent
 
 Utilising the Firebase test lab feature, our app was able to pass the robo test on multiple Android models.
 
-
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image3.png "image_tooltip")
-
-
-
-
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image4.png "image_tooltip")
-
-
 Furthermore, we conducted several tests to verify the synchronisation of data between the UI and the Firestore database. 
 
 
@@ -252,21 +215,9 @@ Furthermore, we conducted several tests to verify the synchronisation of data be
 
 A user that was added through Firebase Authentication platform was able to login to KopiMate, thus displaying data synchronisation between the two systems.
 
-
-
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image5.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image5.png "image_tooltip")
-
-
-
-
-
 ### Test 2: Creating posts from the Firestore database
 
 Upon creating a post document from Firebase, the UI similarly displayed that post, hence showing that there was effective communication between the two systems.
-
 
 ## 3.4 User Acceptance Testing
 
