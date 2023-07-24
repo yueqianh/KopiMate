@@ -1,4 +1,4 @@
-# **KopiMate **an NUS SoC Orbital 2023 Project
+# KopiMate, an NUS SoC Orbital 2023 Project
 # Project README
 
 <p style="text-align: right">
