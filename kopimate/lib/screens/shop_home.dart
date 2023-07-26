@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kopimate/screens/add_shop_screen.dart';
@@ -76,197 +78,207 @@ class _ShopScreenState extends State<ShopScreen> {
     return (distance);
   }
 
+//sort shops based on distance
+  final Query ref = FirebaseFirestore.instance.collection("New Shop");
+  List<DocumentSnapshot>? shops;
+  StreamSubscription<QuerySnapshot>? subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    subscription = ref.snapshots().listen((data) {
+      setState(() {
+        shops = data.docs;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
+    shops?.sort((a, b) {
+      return calculateDistance(userLatLng.latitude, userLatLng.longitude,
+              a['lat'].toDouble(), a['long'].toDouble())
+          .compareTo(calculateDistance(userLatLng.latitude,
+              userLatLng.longitude, b['lat'].toDouble(), b['long'].toDouble()));
+    });
 
-    // Access firebase shops.
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("New Shop").snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final List<LatLng> latLen = <LatLng>[];
-            for (int i = 0; i < snapshot.data!.docs.length; i++) {
-              latLen.add(LatLng(snapshot.data!.docs[i].get('lat'),
-                  snapshot.data!.docs[i].get('long')));
-            }
+    return shops != null
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text('Nearby Shops'),
+              actions: [
+                // Button to get user current location and update distance of nearby shops.
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      Position position = await _determinePosition();
 
-            loadData() async {
-              for (int i = 0; i < snapshot.data!.docs.length; i++) {
-                markers.add(Marker(
-                  markerId: MarkerId(i.toString()),
-                  position: latLen[i],
-                  infoWindow: InfoWindow(
-                    title: snapshot.data!.docs[i].get('name'),
-                  ),
-                ));
-              }
-            }
+                      mapController.animateCamera(
+                          CameraUpdate.newCameraPosition(CameraPosition(
+                              target:
+                                  LatLng(position.latitude, position.longitude),
+                              zoom: 14)));
 
-            loadData();
+                      markers.clear();
 
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('Nearby Shops'),
-                actions: [
-                  // Button to get user current location and update distance of nearby shops.
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        Position position = await _determinePosition();
+                      markers.add(Marker(
+                          markerId: const MarkerId('currentLocation'),
+                          position:
+                              LatLng(position.latitude, position.longitude)));
 
-                        mapController.animateCamera(
-                            CameraUpdate.newCameraPosition(CameraPosition(
-                                target: LatLng(
-                                    position.latitude, position.longitude),
-                                zoom: 14)));
-
-                        markers.clear();
-
-                        markers.add(Marker(
-                            markerId: const MarkerId('currentLocation'),
-                            position:
-                                LatLng(position.latitude, position.longitude)));
-
-                        setState(() {});
-                      },
-                      child: const Icon(Icons.location_on),
-                    ),
-                  ),
-
-                  // Button to add shops.
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AddShopScreen()),
-                        );
-                      },
-                      child: const Icon(Icons.add),
-                    ),
-                  ),
-                ],
-              ),
-              body: Column(children: [
-                SizedBox(
-                  height: 300,
-                  width: double.maxFinite,
-                  child: GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: _center,
-                      zoom: 11.0,
-                    ),
-                    markers: Set<Marker>.of(markers),
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.location_on),
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                // Button to add shops.
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddShopScreen()),
+                      );
+                    },
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+              ],
+            ),
+            body: Column(children: [
+              SizedBox(
+                height: 300,
+                width: double.maxFinite,
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: _center,
+                    zoom: 11.0,
+                  ),
+                  markers: Set<Marker>.of(markers),
+                ),
+              ),
 
-                // List of shops.
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    // Get shop.
-                    final shop = snapshot.data!.docs[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5.0, vertical: 1.0),
-                      child: Card(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ShopDetail(
-                                  shop: Shop(
-                                    address: shop['address'],
-                                    name: shop['name'],
-                                    imgName: shop['imgName'],
-                                    imgUrl: shop['imgUrl'],
-                                    shopId: shop.id,
-                                    rating: shop['rating'],
-                                    phoneNumber: shop['phoneNumber'],
-                                    website: shop['website'],
-                                  ),
+              const SizedBox(height: 10),
+
+              // List of shops.
+              Expanded(
+                  child: ListView.builder(
+                itemCount: shops?.length,
+                itemBuilder: (context, index) {
+                  final List<LatLng> latLen = <LatLng>[];
+                  for (int i = 0; i < shops!.length; i++) {
+                    latLen.add(
+                        LatLng(shops?[i].get('lat'), shops?[i].get('long')));
+                  }
+
+                  loadData() async {
+                    for (int i = 0; i < shops!.length; i++) {
+                      markers.add(Marker(
+                        markerId: MarkerId(i.toString()),
+                        position: latLen[i],
+                        infoWindow: InfoWindow(
+                          title: shops?[i].get('name'),
+                        ),
+                      ));
+                    }
+                  }
+
+                  loadData();
+
+                  // Get shop.
+                  final shop = shops?[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 1.0),
+                    child: Card(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ShopDetail(
+                                shop: Shop(
+                                  address: shop?['address'],
+                                  name: shop?['name'],
+                                  imgName: shop?['imgName'],
+                                  imgUrl: shop?['imgUrl'],
+                                  shopId: shop!.id,
+                                  rating: shop['rating'],
+                                  phoneNumber: shop['phoneNumber'],
+                                  website: shop['website'],
                                 ),
                               ),
-                            );
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 120,
-                                height: 100,
-                                // picture of the shops
-                                child: FutureBuilder(
-                                    future: storage.downloadURL(
-                                        shop['imgName'], shop['imgUrl']),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<String> snapshot) {
-                                      if (snapshot.connectionState ==
-                                              ConnectionState.done &&
-                                          snapshot.hasData) {
-                                        return ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                          ),
-                                          child: Image.network(
-                                            snapshot.data!,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        );
-                                      }
-                                      if (snapshot.connectionState ==
-                                              ConnectionState.waiting ||
-                                          !snapshot.hasData) {
-                                        return const CircularProgressIndicator();
-                                      }
-                                      return Container();
-                                    }),
-                              ),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 120,
+                              height: 100,
 
-                              const SizedBox(width: 10),
+                              // picture of the shops
+                              child: FutureBuilder(
+                                  future: storage.downloadURL(
+                                      shop?['imgName'], shop?['imgUrl']),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    if (snapshot.connectionState ==
+                                            ConnectionState.done &&
+                                        snapshot.hasData) {
+                                      return ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                        ),
+                                        child: Image.network(
+                                          snapshot.data!,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    }
+                                    if (snapshot.connectionState ==
+                                            ConnectionState.waiting ||
+                                        !snapshot.hasData) {
+                                      return const CircularProgressIndicator();
+                                    }
+                                    return Container();
+                                  }),
+                            ),
 
-                              //name and address of the shops
-                              Expanded(
-                                child: ListTile(
-                                  horizontalTitleGap: 10,
-                                  title: Text(
-                                    shop['name'],
-                                    maxLines: 1,
-                                  ),
-                                  subtitle: Text(
-                                    "${calculateDistance(userLatLng.latitude, userLatLng.longitude, shop['lat'].toDouble(), shop['long'].toDouble()).toStringAsFixed(2)}km from you\n${shop['address']}",
-                                    maxLines: 2,
-                                  ),
-                                  isThreeLine: true,
-                                  contentPadding: const EdgeInsets.all(0),
+                            const SizedBox(width: 10),
+
+                            //name and address of the shops
+                            Expanded(
+                              child: ListTile(
+                                horizontalTitleGap: 10,
+                                title: Text(
+                                  shop?['name'],
+                                  maxLines: 1,
                                 ),
+                                subtitle: Text(
+                                  "${calculateDistance(userLatLng.latitude, userLatLng.longitude, shop?['lat'].toDouble(), shop?['long'].toDouble()).toStringAsFixed(2)}km from you\n${shop?['address']}",
+                                  maxLines: 2,
+                                ),
+                                isThreeLine: true,
+                                contentPadding: const EdgeInsets.all(0),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                ))
-              ]),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error:${snapshot.error}'),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        });
+                    ),
+                  );
+                },
+              ))
+            ]),
+          )
+        : const Center(child: CircularProgressIndicator());
   }
 }
