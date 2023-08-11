@@ -19,6 +19,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   late GoogleMapController mapController;
+  final List<LatLng> latLen = <LatLng>[];
   Set<Marker> markers = {};
   final LatLng _center = const LatLng(1.3521, 103.8198);
   LatLng userLatLng = const LatLng(1.3521, 103.8198);
@@ -89,13 +90,31 @@ class _ShopScreenState extends State<ShopScreen> {
     subscription = ref.snapshots().listen((data) {
       setState(() {
         shops = data.docs;
+        loadData();
       });
     });
+  }
+
+//get shop markers
+  loadData() async {
+    for (int i = 0; i < shops!.length; i++) {
+      latLen.add(LatLng(shops?[i].get('lat'), shops?[i].get('long')));
+    }
+    for (int i = 0; i < shops!.length; i++) {
+      markers.add(Marker(
+        markerId: MarkerId(i.toString()),
+        position: latLen[i],
+        infoWindow: InfoWindow(
+          title: shops?[i].get('name'),
+        ),
+      ));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
+
     shops?.sort((a, b) {
       return calculateDistance(userLatLng.latitude, userLatLng.longitude,
               a['lat'].toDouble(), a['long'].toDouble())
@@ -120,8 +139,6 @@ class _ShopScreenState extends State<ShopScreen> {
                               target:
                                   LatLng(position.latitude, position.longitude),
                               zoom: 14)));
-
-                      markers.clear();
 
                       markers.add(Marker(
                           markerId: const MarkerId('currentLocation'),
@@ -171,13 +188,14 @@ class _ShopScreenState extends State<ShopScreen> {
                   child: ListView.builder(
                 itemCount: shops?.length,
                 itemBuilder: (context, index) {
+                  /*
                   final List<LatLng> latLen = <LatLng>[];
                   for (int i = 0; i < shops!.length; i++) {
                     latLen.add(
                         LatLng(shops?[i].get('lat'), shops?[i].get('long')));
                   }
 
-                  loadData() async {
+                  loadData() {
                     for (int i = 0; i < shops!.length; i++) {
                       markers.add(Marker(
                         markerId: MarkerId(i.toString()),
@@ -190,6 +208,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   }
 
                   loadData();
+                  */
 
                   // Get shop.
                   final shop = shops?[index];
