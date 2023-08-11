@@ -10,7 +10,7 @@ Level of Achievement: Apollo 11</p>
 
 ---
 
-**Download the Milestone 3 Release Android APK for testing here: [https://github.com/yueqianh/KopiMate/releases/tag/v0.3](https://github.com/yueqianh/KopiMate/releases/tag/v0.3)**
+**Download the Splashdown Release Android APK here: [https://github.com/yueqianh/KopiMate/releases/tag/v1.0](https://github.com/yueqianh/KopiMate/releases/tag/v1.0)**
 
 # Part 1. Introduction
 
