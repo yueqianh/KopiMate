@@ -133,7 +133,7 @@ _Sequence diagram for posting activities in the Espresso Forum_
 
 
 
-* **Dry principle: **Instead of duplicating complex logic, we encapsulated it in classes that could be reused. This allowed us to instantiate the class whenever we needed that specific functionality, rather than rewriting the same logic. For instance, the logic for the posts were encapsulated in a widget to be used throughout the different pages.
+* **Dry principle:** Instead of duplicating complex logic, we encapsulated it in classes that could be reused. This allowed us to instantiate the class whenever we needed that specific functionality, rather than rewriting the same logic. For instance, the logic for the posts were encapsulated in a widget to be used throughout the different pages.
 * **YAGNI principle:** We defined the minimum viable product (MVP) that needed to be implemented to meet the project's goals. This has helped in avoiding unnecessary work on non-essential features.
 
 
@@ -150,10 +150,10 @@ _Sequence diagram for posting activities in the Espresso Forum_
 In this example, we have three main components of the MVC pattern:
 
 
-    **Model:** The Forum class stores the messages different users have posted.
+    **Model:** The Post class stores the messages different users have posted.
 
 
-    **View:** The StreamBuilder is responsible for rendering the posts to the user interface. In this case, it simply displays the posts on the app.
+    **View:** The ForumPage is responsible for rendering the posts to the user interface. 
 
 
     **Controller:** The textController acts as the intermediary between the model and the view. It receives user input and updates the model accordingly. It also communicates with the view to display the posts on the forum.
@@ -163,8 +163,8 @@ In this example, we have three main components of the MVC pattern:
 
 
 
-* **Use appropriate naming conventions: **We meaningfully named variables, functions, classes, and other elements in our code. By doing this, it becomes easier to grasp their functionality which leads to faster comprehension by other users.
-* **Formatting: **We used a Dart extension in VSCode to ensure that our code is properly indented with appropriate spacing.
+* **Use appropriate naming conventions:** We meaningfully named variables, functions, classes, and other elements in our code. By doing this, it becomes easier to grasp their functionality which leads to faster comprehension by other users.
+* **Formatting:** We used a Dart extension in VSCode to ensure that our code is properly indented with appropriate spacing.
 
 
 # Part 3. Testing
